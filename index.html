@@ -315,13 +315,44 @@ p {
 
 <body>
 
-<audio id="music" loop>
- <source src="music.mp3" type="audio/mpeg">
+<audio id="music" loop preload="auto">
+    <source src="Music.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music" onclick="toggleMusic()" id="musicBtn">
- ♫ Play Music
+<button id="musicBtn" onclick="toggleMusic()" style="
+    position:fixed;
+    bottom:20px;
+    right:18px;
+    z-index:99999;
+    background:linear-gradient(135deg,#ff69a6,#a855f7);
+    color:white;
+    border:none;
+    border-radius:30px;
+    padding:13px 19px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;">
+    🎵 Play Music
 </button>
+
+<script>
+const backgroundMusic = document.getElementById("music");
+const musicButton = document.getElementById("musicBtn");
+
+async function toggleMusic() {
+    if (backgroundMusic.paused) {
+        try {
+            await backgroundMusic.play();
+            musicButton.innerHTML = "⏸ Pause Music";
+        } catch (error) {
+            musicButton.innerHTML = "🎵 Tap to Play";
+        }
+    } else {
+        backgroundMusic.pause();
+        musicButton.innerHTML = "🎵 Play Music";
+    }
+}
+</script>
 
 <!-- PAGE 1 -->
 <section class="page active" id="p1">
