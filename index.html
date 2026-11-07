@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Buddy 🐷</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Caveat:wght@600;700&display=swap');
+
+:root {
+ --pink:#ff77a8;
+ --purple:#a78bfa;
+ --dark:#171329;
+ --white:#fff9ff;
+}
+
+* {box-sizing:border-box;margin:0;padding:0}
+
+body {
+ font-family:'DM Sans',sans-serif;
+ background:var(--dark);
+ color:var(--white);
+ overflow-x:hidden;
+}
+
+body:before {
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ background:
+ radial-gradient(circle at 15% 15%,#793d8060,transparent 35%),
+ radial-gradient(circle at 85% 80%,#bd528650,transparent 35%),
+ linear-gradient(135deg,#171329,#291b42,#171329);
+}
+
+button {font-family:inherit;cursor:pointer}
+
+.page {
+ min-height:100vh;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:35px 18px;
+ animation:appear .7s ease;
+}
+
+.page.active {display:flex}
+
+@keyframes appear {
+ from {opacity:0;transform:translateY(15px)}
+ to {opacity:1;transform:translateY(0)}
+}
+
+.container {
+ width:min(650px,100%);
+ text-align:center;
+}
+
+.eyebrow {
+ color:#ffb5d2;
+ letter-spacing:4px;
+ font-size:11px;
+ font-weight:700;
+ text-transform:uppercase;
+ margin-bottom:22px;
+}
+
+h1,h2 {
+ font-family:'Playfair Display',serif;
+ line-height:1.2;
+}
+
+h1 {font-size:clamp(38px,9vw,65px)}
+h2 {font-size:clamp(30px,7vw,44px);margin-bottom:20px}
+
+.gradient {
+ background:linear-gradient(100deg,#ffb3d1,#c5aaff,#fff);
+ -webkit-background-clip:text;
+ color:transparent;
+}
+
+p {
+ color:#e6ddec;
+ line-height:1.85;
+ font-size:15px;
+}
+
+.sub {
+ margin:20px auto;
+ max-width:490px;
+}
+
+.card {
+ background:#ffffff0d;
+ border:1px solid #ffffff20;
+ border-radius:25px;
+ padding:28px 23px;
+ backdrop-filter:blur(15px);
+ box-shadow:0 20px 65px #00000035;
+ margin:22px auto;
+}
+
+.btn {
+ border:0;
+ padding:14px 25px;
+ border-radius:40px;
+ font-weight:700;
+ font-size:14px;
+ transition:.25s;
+}
+
+.yes {
+ color:#29162f;
+ background:linear-gradient(120deg,#ffb3d1,#d5baff);
+ box-shadow:0 8px 25px #ff77a855;
+}
+
+.no {
+ color:white;
+ background:#ffffff15;
+ border:1px solid #ffffff40;
+}
+
+.btn:hover {transform:scale(1.05)}
+
+.buttons {
+ display:flex;
+ justify-content:center;
+ gap:15px;
+ flex-wrap:wrap;
+ margin-top:28px;
+}
+
+.small {
+ font-size:12px;
+ color:#cbbbd8;
+ margin-top:22px;
+}
+
+.emoji {
+ font-size:65px;
+ display:block;
+ margin-bottom:20px;
+ animation:bob 2s infinite ease-in-out;
+}
+
+@keyframes bob {
+ 50% {transform:translateY(-10px) rotate(5deg)}
+}
+
+.badge {
+ display:inline-block;
+ border:1px solid #ffafd0;
+ color:#ffb5d2;
+ padding:9px 17px;
+ border-radius:40px;
+ font-size:12px;
+ letter-spacing:1px;
+ margin:8px;
+}
+
+.quote {
+ font-family:'Caveat',cursive;
+ font-size:29px;
+ color:#ffc1da;
+ line-height:1.5;
+ margin:20px 0;
+}
+
+.grid {
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ margin:24px 0;
+}
+
+.tile {
+ background:#ffffff10;
+ border:1px solid #ffffff20;
+ border-radius:20px;
+ padding:22px 13px;
+ min-height:125px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:9px;
+}
+
+.tile span {font-size:30px}
+.tile strong {font-size:14px}
+.tile small {color:#cbbbd8;line-height:1.5}
+
+.memory {
+ text-align:left;
+ border-left:3px solid #ff9ec5;
+ padding:5px 0 5px 18px;
+ margin:22px 0;
+}
+
+.memory strong {
+ color:#ffb5d2;
+ display:block;
+ margin-bottom:8px;
+}
+
+.photo-grid {
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ margin:25px 0;
+}
+
+.photo {
+ min-height:190px;
+ border-radius:19px;
+ border:1px dashed #ffafd0;
+ background:linear-gradient(140deg,#68416f,#a85c91,#49356d);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ gap:10px;
+ padding:15px;
+ overflow:hidden;
+}
+
+.photo img {
+ width:100%;
+ height:190px;
+ object-fit:cover;
+ border-radius:15px;
+ display:none;
+}
+
+.photo span {font-size:34px}
+.photo small {color:#fff0f8}
+
+.secret {
+ display:none;
+ margin-top:22px;
+ animation:appear .5s ease;
+}
+
+.secret.show {display:block}
+
+.letter {
+ text-align:left;
+ line-height:2;
+ color:#f5e9f5;
+ font-size:15px;
+}
+
+.progress {
+ height:9px;
+ border-radius:20px;
+ background:#ffffff20;
+ overflow:hidden;
+ margin:25px 0;
+}
+
+.bar {
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,#ff77a8,#bca5ff);
+ border-radius:20px;
+ transition:width .2s;
+}
+
+.footer {
+ color:#bba9ca;
+ font-size:11px;
+ margin-top:35px;
+}
+
+.music {
+ position:fixed;
+ top:15px;
+ right:15px;
+ z-index:20;
+ border:1px solid #ffffff40;
+ border-radius:30px;
+ padding:10px 14px;
+ color:white;
+ background:#291b42dd;
+ font-size:12px;
+}
+
+.next {
+ margin-top:28px;
+}
+
+.hearts {
+ position:fixed;
+ pointer-events:none;
+ z-index:-1;
+ animation:floatUp 6s linear infinite;
+ opacity:.55;
+}
+
+@keyframes floatUp {
+ from {transform:translateY(105vh) rotate(0deg);opacity:0}
+ 15% {opacity:.6}
+ to {transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+
+@media(max-width:450px) {
+ .grid,.photo-grid {grid-template-columns:1fr 1fr}
+ .card {padding:23px 17px}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+ <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music" onclick="toggleMusic()" id="musicBtn">
+ ♫ Play Music
+</button>
+
+<!-- PAGE 1 -->
+<section class="page active" id="p1">
+<div class="container">
+ <div class="eyebrow">A little surprise awaits</div>
+ <span class="emoji">🐷</span>
+ <div class="badge">TO: SUAR</div>
+ <div class="badge">FROM: EK PYAARI SI LADKI</div>
+ <h1 class="gradient">Heyyy, Mr. Suar!</h1>
+ <p class="sub">Someone has made something for you.<br>And no, it's not another lecture on your flirting skills. 😂</p>
+ <h2 style="font-size:25px">Do you want to open it?</h2>
+ <div class="buttons">
+  <button class="btn yes" onclick="start()">YES, OPEN IT 💗</button>
+  <button class="btn no" id="noBtn" onclick="runAway()">NO, NOT INTERESTED 🙈</button>
+ </div>
+ <p class="small" id="noText">Choose wisely, Mr. Flirtbaaz.</p>
+</div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="page" id="p2">
+<div class="container">
+ <div class="eyebrow">Please wait...</div>
+ <span class="emoji">💌</span>
+ <h1 class="gradient">Loading our bakchodi...</h1>
+ <p class="sub" id="loadingText">Checking your flirting skills...</p>
+ <div class="progress"><div class="bar" id="bar"></div></div>
+ <p class="small">Please don't run away. 😂</p>
+</div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="page" id="p3">
+<div class="container">
+ <div class="eyebrow">Chapter 01 · The introduction</div>
+ <span class="emoji">✨</span>
+ <h1 class="gradient">An unexpected friendship.</h1>
+ <div class="card">
+  <p>Who knew that a random college friendship would turn into so much bakchodi?</p>
+  <p style="margin-top:16px">We haven't known each other forever, and we don't have a hundred years of memories.</p>
+  <p style="margin-top:16px">But a few months were enough to make our random conversations, teasing and nonsense a pretty fun part of college.</p>
+ </div>
+ <div class="quote">"No formalities. Just vibes and bakchodi."</div>
+ <button class="btn yes next" onclick="go(4)">NEXT →</button>
+</div>
+</section>
+
+<!-- PAGE 4 -->
+<section class="page" id="p4">
+<div class="container">
+ <div class="eyebrow">Chapter 02 · An official investigation</div>
+ <span class="emoji">🏆</span>
+ <h1 class="gradient">Mr. Flirtbaaz Award</h1>
+ <div class="card">
+  <div class="badge">CERTIFIED FLIRTBAAZ</div>
+  <h2 style="font-size:27px;margin:15px 0">Lifetime achievement award 😂</h2>
+  <p>For outstanding performance in:</p>
+  <div class="memory">
+   <strong>01. Flirting skills</strong>
+   Apparently, always at the top level.
+  </div>
+  <div class="memory">
+   <strong>02. Confidence</strong>
+   "Always flirting with Shraddha." Wah bhai! 😂
+  </div>
+  <div class="memory">
+   <strong>03. Romance as a hobby</strong>
+   Career planning toh sorted hai tumhari!
+  </div>
+  <div class="memory">
+   <strong>04. Bewakoofi</strong>
+   Is department mein bhi kaafi experience hai.
+  </div>
+ </div>
+ <div class="quote">"Kab sudhrega tu, bhai?" 😭</div>
+ <button class="btn yes next" onclick="go(5)">NEXT →</button>
+</div>
+</section>
+
+<!-- PAGE 5 -->
+<section class="page" id="p5">
+<div class="container">
+ <div class="eyebrow">Chapter 03 · Things you should know</div>
+ <h1 class="gradient">A few observations...</h1>
+ <div class="grid">
+  <div class="tile"><span>😂</span><strong>Professional Teaser</strong><small>Never misses a chance to pull someone's leg.</small></div>
+  <div class="tile"><span>💬</span><strong>Random Conversations</strong><small>One topic becomes ten different topics.</small></div>
+  <div class="tile"><span>🙄</span><strong>Flirtbaaz Energy</strong><small>Some habits clearly need improvement.</small></div>
+  <div class="tile"><span>🤝</span><strong>Good Friend</strong><small>Jokes apart, genuinely a nice person to know.</small></div>
+ </div>
+ <div class="card">
+  <p>One serious question:</p>
+  <h2 style="font-size:25px">Have you finally stopped flirting? 🤨</h2>
+  <div class="buttons">
+   <button class="btn yes" onclick="answer('yes')">YES, I HAVE 😇</button>
+   <button class="btn no" onclick="answer('no')">NO, NEVER 😂</button>
+  </div>
+  <p id="answerText" class="small"></p>
+ </div>
+ <button class="btn yes next" onclick="go(6)">NEXT →</button>
+</div>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page" id="p6">
+<div class="container">
+ <div class="eyebrow">Chapter 04 · Little memories</div>
+ <h1 class="gradient">The photo corner</h1>
+ <p class="sub">Some faces deserve a permanent place in the friendship gallery. 🐷</p>
+ <div class="photo-grid">
+  <div class="photo"><span>📸</span><small>Memory 01</small></div>
+  <div class="photo"><span>💗</span><small>Memory 02</small></div>
+  <div class="photo"><span>✨</span><small>Memory 03</small></div>
+  <div class="photo"><span>🐷</span><small>Memory 04</small></div>
+ </div>
+ <p class="small">Photo frames are ready for your pictures.</p>
+ <button class="btn yes next" onclick="go(7)">NEXT →</button>
+</div>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page" id="p7">
+<div class="container">
+ <div class="eyebrow">Chapter 05 · Jokes apart</div>
+ <span class="emoji">🫶</span>
+ <h1 class="gradient">The genuinely good part.</h1>
+ <div class="card">
+  <p>Honestly, it's nice when you meet someone in college with whom you can be completely yourself.</p>
+  <p style="margin-top:17px">Someone you can tease without thinking twice, talk random nonsense with, and laugh over the most stupid things.</p>
+  <p style="margin-top:17px">We may still be getting to know each other, but I'm genuinely glad we became friends.</p>
+ </div>
+ <div class="quote">"A new friendship, but a pretty good one." 💗</div>
+ <button class="btn yes next" onclick="go(8)">ONE LAST THING →</button>
+</div>
+</section>
+
+<!-- PAGE 8 -->
+<section class="page" id="p8">
+<div class="container">
+ <div class="eyebrow">A little secret</div>
+ <span class="emoji">💌</span>
+ <h1 class="gradient">Something for you...</h1>
+ <p class="sub">You've survived all the roasting. You deserve a little appreciation now.</p>
+ <button class="btn yes" onclick="document.getElementById('secret').classList.add('show');this.style.display='none'">UNLOCK YOUR MESSAGE 🔐</button>
+ <div class="card secret" id="secret">
+  <h2 style="font-size:28px">Dear Suar,</h2>
+  <p>Thanks for being one of those unexpectedly nice people I've met in college.</p>
+  <p style="margin-top:14px">Keep being your funny, crazy self. Just maybe reduce the flirting by 2%? That's all I'm asking. 😂</p>
+  <p style="margin-top:14px">I hope this friendship keeps bringing random laughs, good conversations and lovely memories.</p>
+ </div>
+ <button class="btn yes next" onclick="go(9)">OPEN THE FINAL PAGE ❤️</button>
+</div>
+</section>
+
+<!-- PAGE 9 -->
+<section class="page" id="p9">
+<div class="container">
+ <div class="eyebrow">One last message · Just for you</div>
+ <span class="emoji">🐷💗</span>
+ <h1 class="gradient">To my favourite idiot.</h1>
+ <div class="card">
+  <div class="letter">
+   Hey Suar,<br><br>
+   I know we haven't known each other for ages, but I'm glad college brought us into each other's lives.<br><br>
+   From random conversations and endless leg-pulling to your legendary flirting skills, you've definitely made these few months more entertaining.<br><br>
+   I hope you keep being the same fun person, keep smiling, keep doing well, and obviously... someday learn to behave. 😂<br><br>
+   No dramatic promises, just a genuine wish that this friendship stays happy, comfortable and full of good memories.<br><br>
+   Take care, idiot. And never lose that crazy sense of humour.
+  </div>
+  <h2 class="gradient" style="margin-top:27px;font-size:38px">Love u buddy! ❤️</h2>
+ </div>
+ <div class="quote">Made with a little love, lots of teasing and zero patience for your flirting. 😂</div>
+ <p class="footer">A little surprise from ek pyaari si ladki 💗</p>
+</div>
+</section>
+
+<script>
+let current=1;
+let noCount=0;
+
+function go(n) {
+ document.getElementById('p'+current).classList.remove('active');
+ current=n;
+ document.getElementById('p'+current).classList.add('active');
+ window.scrollTo(0,0);
+}
+
+function runAway() {
+ noCount++;
+ const b=document.getElementById('noBtn');
+ const t=document.getElementById('noText');
+ const messages=[
+  "Arey, itni jaldi kya hai? 😂",
+  "NO button ko bhi chain se nahi rehne doge!",
+  "Nice try, Mr. Suar! 🐷",
+  "Ab toh YES dabana hi padega!"
+ ];
+ t.textContent=messages[Math.min(noCount-1,3)];
+ b.style.position='relative';
+ b.style.transform=`translate(${Math.random()*100-50}px,${Math.random()*70-35}px)`;
+}
+
+function start() {
+ document.getElementById('music').play().catch(()=>{});
+ go(2);
+ const bar=document.getElementById('bar');
+ const text=document.getElementById('loadingText');
+ const lines=[
+  "Checking your flirting skills...",
+  "Counting your random conversations...",
+  "Preparing your roast...",
+  "Adding a little appreciation...",
+  "Surprise almost ready..."
+ ];
+ let value=0;
+ let i=0;
+ const timer=setInterval(()=>{
+  value+=2;
+  bar.style.width=value+'%';
+  if(value%20===0) {
+   text.textContent=lines[Math.min(i,lines.length-1)];
+   i++;
+  }
+  if(value>=100) {
+   clearInterval(timer);
+   setTimeout(()=>go(3),500);
+  }
+ },45);
+}
+
+function answer(a) {
+ document.getElementById('answerText').textContent=
+ a==='yes'
+ ? "Jhooth bolne ki bhi limit hoti hai, Suar! 😂"
+ : "Expected. Bilkul expected. No surprises here. 😭";
+}
+
+function toggleMusic() {
+ const m=document.getElementById('music');
+ const b=document.getElementById('musicBtn');
+ if(m.paused) {
+  m.play().then(()=>b.textContent='♫ Pause Music').catch(()=>alert('Please add music.mp3 to your repository first.'));
+ } else {
+  m.pause();
+  b.textContent='♫ Play Music';
+ }
+}
+
+// Floating stars
+for(let i=0;i<18;i++) {
+ const s=document.createElement('div');
+ s.className='hearts';
+ s.textContent=['✦','♡','⋆','✧'][i%4];
+ s.style.left=Math.random()*100+'%';
+ s.style.fontSize=(12+Math.random()*15)+'px';
+ s.style.animationDelay=Math.random()*6+'s';
+ s.style.animationDuration=(5+Math.random()*6)+'s';
+ document.body.appendChild(s);
+}
+</script>
+</body>
+</html>
